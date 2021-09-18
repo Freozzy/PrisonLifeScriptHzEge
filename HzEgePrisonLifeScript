@@ -1,0 +1,130 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Prison Life Script | HzEge31", "BloodTheme")
+
+-- Oyuncu
+local Player = Window:NewTab("Oyuncu")
+local PlayerSection = Player:NewSection("Genel")
+
+PlayerSection:NewSlider("Speed", "Hizinizi Ayarlarsiniz", 250, 16, function(a)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
+end)
+
+PlayerSection:NewSlider("Jump", "Ziplama Mesafenizi Ayarlarsiniz", 250, 50, function(t)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = t
+end)
+
+-- Silahlar
+local Main = Window:NewTab("Silahlar")
+local MainSection = Main:NewSection("Silahlar")
+
+MainSection:NewDropdown("Give Gun", "İstediginiz Silahi Verir", {"M9", "Remington 870", "AK-47"}, function(v)
+    local A_1 = game:GetService("Workspace")["Prison_ITEMS"].giver[v].ITEMPICKUP
+    local Event = game:GetService("Workspace").Remote.ItemHandler
+    Event:InvokeServer(A_1)
+end)
+
+MainSection:NewDropdown("Gun Mod", "Silahlarinizi OP Yapar", {"M9", "Remington 870", "AK-47"}, function(v)
+    local module = nil
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v) then
+        module = require(game:GetService("Players").LocalPlayer.Backpack[v].GunStates)
+    elseif game:GetService("Players").LocalPlayer.Character:FindFirstChild(v) then
+        module = require(game:GetService("Players").LocalPlayer.Character[v].GunStates)
+    end
+    if module ~= nil then
+        module["MaxAmmo"] = math.huge
+        module["CurrentAmmo"] = math.huge
+        module["StoredAmmo"] = math.huge
+        module["FireRate"] = 0.000001
+        module["Spread"] = 0
+        module["Range"] = math.huge
+        module["Bullets"] = 10
+        module["ReloadTime"] = 0.000001
+        module["AutoFire"] = true
+    end
+end)
+
+--Genel
+local Bane = Window:NewTab("Genel")
+local BaneSection = Bane:NewSection("Scriptler")
+
+BaneSection:NewDropdown("Team","Teaminizi Secersiniz",{"Criminal","Neutral","Gaurd","Inmate"},function(v)
+if v == "Criminal" then
+local weld02 = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-919.958, 95.327, 2138.189)
+wait(1)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(weld02)
+elseif v == "Inmate" then
+game.Workspace.Remote.TeamEvent:FireServer("Bright orange")
+elseif v == "Gaurd" then
+game.Workspace.Remote.TeamEvent:FireServer("Bright blue")
+elseif v == "Neutral" then
+game.Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
+end
+end)
+
+--Buttons
+local toggles = Window:NewTab("Buttonlar")
+local togglesec = toggles:NewSection("Buttonlar")
+
+togglesec:NewToggle("Noclip","Duvarlardan Gecersiniz",function(state)
+getgenv().noclip = state
+end)
+
+togglesec:NewToggle("God Mode","Gebermezsin",function(state)
+getgenv().godmode = state
+end)
+
+togglesec:NewToggle("Super Punch","Herkesi Teklersiniz",function(state)
+    getgenv().onepunch = state
+end)
+
+-- Teleportlar
+local teleports = Window:NewTab("Teleportlar")
+local teleportsec = teleports:NewSection("Teleportlar")
+
+teleportsec:NewButton("Criminal Base","Teleports to the Criminal Base",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-859.15161132813, 94.476051330566, 2058.5427246094)
+end)
+
+teleportsec:NewButton("Downtown","Teleports you to down town",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-300.44033813477, 54.175037384033, 1781.2364501953)
+end)
+
+teleportsec:NewButton("Entrance Gate","Teleports you to the entrance gate",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(491.27182006836, 98.039939880371, 2216.3107910156)
+end)
+
+teleportsec:NewButton("Entrance","Teleports you to the entrance",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(653.81713867188, 99.990005493164, 2272.083984375)
+end)
+
+teleportsec:NewButton("Yard","Teleports you to the yard",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(781.6845703125, 97.999946594238, 2462.8779296875)
+end)
+
+teleportsec:NewButton("Hallway","Teleports you to the hallway",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(860.78448486328, 99.990005493164, 2362.9597167969)
+end)
+
+teleportsec:NewButton("Cell Block","Teleports you to the cell block",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(918.43115234375, 99.989990234375, 2440.3828125)
+end)
+
+teleportsec:NewButton("Cafeteria","Teleports you to the cafeteria",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(932.06213378906, 99.989959716797, 2290.4250488281)
+end)
+
+teleportsec:NewButton("Armory","Teleports you to the armory",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(835.28918457031, 99.990005493164, 2285.4909667969)
+end)
+
+teleportsec:NewButton("Gaurds Only","Teleports you to the gaurds only room",function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(830.04302978516, 99.990005493164, 2327.0859375)
+end)
+
+-- Ayarlar
+local Ayarlar = Window:NewTab("Ayarlar")
+local AyarlarSection = Ayarlar:NewSection("Ayarlar")
+AyarlarSection:NewKeybind("UI Kisayolu", "UI'yi Acma Kapama Tusu", Enum.KeyCode.E, function()
+	Library:ToggleUI()
+end)
